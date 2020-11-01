@@ -1,0 +1,21 @@
+version: "3.4"
+services:
+  openvpn-as:
+    image: linuxserver/openvpn-as
+    container_name: openvpn-as
+    privileged: true
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - INTERFACE=${INTERFACE} #optional
+    volumes:
+      - ./vpn-data:/config
+    ports:
+      - 943:943
+      - 9443:9443
+      - 1194:1194/udp
+    restart: unless-stopped
